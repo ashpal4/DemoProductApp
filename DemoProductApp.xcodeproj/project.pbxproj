@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4812AB862E02BA68004D00C5 /* FetchProductsUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812AB852E02BA68004D00C5 /* FetchProductsUseCaseImpl.swift */; };
 		486698202E01AEA000AAEC0B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4866981F2E01AEA000AAEC0B /* APIRequest.swift */; };
 		48A776D72E029E40001EAF0A /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A776D62E029E40001EAF0A /* AppCoordinatorTests.swift */; };
 		48A776D92E029E6F001EAF0A /* DIContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A776D82E029E6F001EAF0A /* DIContainerTests.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4812AB852E02BA68004D00C5 /* FetchProductsUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProductsUseCaseImpl.swift; sourceTree = "<group>"; };
 		4866981F2E01AEA000AAEC0B /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		48A776D62E029E40001EAF0A /* AppCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorTests.swift; sourceTree = "<group>"; };
 		48A776D82E029E6F001EAF0A /* DIContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainerTests.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				BDDF16362E00069300530378 /* FetchProductsUseCase.swift */,
+				4812AB852E02BA68004D00C5 /* FetchProductsUseCaseImpl.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				BDDF16372E00069300530378 /* FetchProductsUseCase.swift in Sources */,
 				48A776E02E02B1E9001EAF0A /* ImageCache.swift in Sources */,
 				BDDF16432E00097800530378 /* AppCoordinatorView.swift in Sources */,
+				4812AB862E02BA68004D00C5 /* FetchProductsUseCaseImpl.swift in Sources */,
 				BDDF16452E00175600530378 /* ProductDetailViewModel.swift in Sources */,
 				BDDF165B2E001EFB00530378 /* ProductResponseDTO.swift in Sources */,
 				BDDF165E2E001F1E00530378 /* APIClientProtocol.swift in Sources */,

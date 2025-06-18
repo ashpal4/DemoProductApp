@@ -7,18 +7,13 @@
 
 import Combine
 
+/// A use case protocol for executing product fetching logic.
+///
+/// This represents the business logic layer and acts as an abstraction
+/// between the view model and data layer.
 protocol FetchProductsUseCase {
+    /// Executes the use case to fetch products.
+    ///
+    /// - Returns: A publisher that emits a list of `Product` or an `Error`.
     func execute() -> AnyPublisher<[Product], Error>
-}
-
-final class FetchProductsUseCaseImpl: FetchProductsUseCase {
-    private let repository: ProductRepository
-
-    init(repository: ProductRepository) {
-        self.repository = repository
-    }
-
-    func execute() -> AnyPublisher<[Product], Error> {
-        return repository.fetchProducts()
-    }
 }
