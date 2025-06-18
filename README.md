@@ -1,1 +1,1 @@
-# DemoProductApp
+# Dummy app
