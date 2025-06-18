@@ -9,64 +9,79 @@ import XCTest
 import Combine
 @testable import DemoProductApp
 
-@MainActor
 final class ProductsListViewModelTests: XCTestCase {
-    var cancellables: Set<AnyCancellable>!
-
-    override func setUp() {
-        super.setUp()
+    private var cancellables: Set<AnyCancellable> = []
+    
+    override func tearDown() {
         cancellables = []
+        super.tearDown()
     }
 
     func test_loadProducts_success() {
         // Arrange
         let mockRepo = MockProductRepository()
-        mockRepo.productsToReturn = [Product.mock()]
+        let expectedProducts = [Product.mock()]
+        mockRepo.productsToReturn = expectedProducts
+
         let useCase = FetchProductsUseCaseImpl(repository: mockRepo)
         let viewModel = ProductsListViewModel(fetchProductsUseCase: useCase)
 
-        let expectation = XCTestExpectation(description: "Products loaded")
+        let productsExpectation = expectation(description: "Products loaded")
+        let viewStateExpectation = expectation(description: "ViewState returns to idle")
 
-        // Act
+        // Observe product loading
         viewModel.$products
             .dropFirst()
             .sink { products in
-                XCTAssertEqual(products.count, mockRepo.productsToReturn.count)
-                expectation.fulfill()
+                XCTAssertEqual(products, expectedProducts)
+                productsExpectation.fulfill()
             }
             .store(in: &cancellables)
 
+        // Observe state change to .idle
+        viewModel.$viewState
+            .dropFirst(2) // initial (.idle), then (.loading), then (.idle)
+            .sink { state in
+                XCTAssertEqual(state, .idle)
+                viewStateExpectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Act
         viewModel.loadProducts()
 
         // Assert
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [productsExpectation, viewStateExpectation], timeout: 5.0)
     }
 
     func test_loadProducts_failure() {
         // Arrange
         let mockRepo = MockProductRepository()
-        mockRepo.errorToThrow = URLError(.badServerResponse)
+        let expectedError = URLError(.badServerResponse)
+        mockRepo.errorToThrow = expectedError
+
         let useCase = FetchProductsUseCaseImpl(repository: mockRepo)
         let viewModel = ProductsListViewModel(fetchProductsUseCase: useCase)
-        
-        let expectation = XCTestExpectation(description: "Expect error message to be set")
-        
-        viewModel.$errorMessage
-            .dropFirst() // skip initial nil value
-            .sink { error in
-                if let error = error {
-                    XCTAssertEqual(error, URLError(.badServerResponse).localizedDescription)
-                    expectation.fulfill()
+
+        let errorExpectation = expectation(description: "Error state is emitted")
+
+        // Observe state for error
+        viewModel.$viewState
+            .dropFirst(2) // initial (.idle), then (.loading), then (.error)
+            .sink { state in
+                if case .error(let message) = state {
+                    XCTAssertEqual(message, expectedError.localizedDescription)
+                    errorExpectation.fulfill()
+                } else {
+                    XCTFail("Expected error state, got \(state)")
                 }
             }
             .store(in: &cancellables)
-        
+
         // Act
         viewModel.loadProducts()
-        
+
         // Assert
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [errorExpectation], timeout: 5.0)
     }
-
-
 }

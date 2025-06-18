@@ -54,12 +54,15 @@ extension ProductsListView {
     
     @ViewBuilder
     var overlayView: some View {
-        if viewModel.isLoading {
-            ProgressView()
-        } else if let error = viewModel.errorMessage {
-            Text(error)
-                .foregroundColor(.red)
-                .padding()
-        }
+        switch viewModel.viewState {
+            case .loading:
+                ProgressView()
+            case .error(let message):
+                Text(message)
+                    .foregroundColor(.red)
+                    .padding()
+            default:
+                EmptyView()
+            }
     }
 }
