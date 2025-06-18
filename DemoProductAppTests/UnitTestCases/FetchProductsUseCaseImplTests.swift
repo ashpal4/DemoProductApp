@@ -11,6 +11,11 @@ import Combine
 
 final class FetchProductsUseCaseImplTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
+    
+    override func tearDown() {
+        cancellables = []
+        super.tearDown()
+    }
 
     func test_execute_returnsProductsSuccessfully() {
         // Arrange

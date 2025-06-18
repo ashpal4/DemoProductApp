@@ -9,8 +9,14 @@ import Foundation
 import Combine
 
 final class APIClient: APIClientProtocol {
+    private let session: URLSession
+
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+
     func request<T: Decodable>(_ request: URLRequest, responseType: T.Type) -> AnyPublisher<T, Error> {
-        return URLSession.shared.dataTaskPublisher(for: request)
+        return session.dataTaskPublisher(for: request)
             .tryMap { result in
                 let decoder = JSONDecoder()
                 guard let httpResponse = result.response as? HTTPURLResponse,
@@ -22,3 +28,4 @@ final class APIClient: APIClientProtocol {
             .eraseToAnyPublisher()
     }
 }
+

@@ -44,7 +44,7 @@ extension ProductsListView {
     }
     
     func thumbnailView(name: String) -> some View {
-        AsyncImage(url: URL(string: name)) { phase in
+        CachedAsyncImage(url: URL(string: name)) { phase in
             switch phase {
             case .success(let image):
                 image

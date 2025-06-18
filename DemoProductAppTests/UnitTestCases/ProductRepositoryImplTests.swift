@@ -12,6 +12,11 @@ import Combine
 final class ProductRepositoryImplTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
 
+    override func tearDown() {
+        cancellables = []
+        super.tearDown()
+    }
+    
     func test_fetchProducts_success() {
         // Arrange
         let mockDTO = ProductResponseDTO(products: [
