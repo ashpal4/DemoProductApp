@@ -7,18 +7,18 @@
 
 import Combine
 
-/// Default implementation of `FetchProductsUseCase`.
+/// Default implementation of `FetchProductsUseCaseProtocol`.
 ///
 /// It relies on a `ProductRepository` to obtain product data.
-final class FetchProductsUseCaseImpl: FetchProductsUseCase {
+final class FetchProductsUseCaseImpl: FetchProductsUseCaseProtocol {
 
     /// The repository responsible for fetching product data.
-    private let repository: ProductRepository
+    private let repository: ProductRepositoryProtocol
 
     /// Initializes the use case with a product repository.
     ///
     /// - Parameter repository: The product repository to use.
-    init(repository: ProductRepository) {
+    init(repository: ProductRepositoryProtocol) {
         self.repository = repository
     }
 

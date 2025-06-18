@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct ProductsListView: View {
-    @ObservedObject var viewModel: ProductsListViewModel
     @EnvironmentObject private var coordinator: AppCoordinator
-
+    @StateObject private var viewModel: ProductsListViewModel
+    
+    init(viewModel: ProductsListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         List(viewModel.products) { product in
             Button {
                 coordinator.push(.productDetail(product: product))
             } label: {
                 HStack {
-                    thumbnailView(name: product.thumbnail)
+                    ThumbnailImageView(imageUrl: product.thumbnail)
                     VStack(alignment: .leading) {
                         titleView(title: product.title)
                         priceView(price: product.price)
@@ -38,28 +42,6 @@ struct ProductsListView: View {
 }
 
 extension ProductsListView {
-    enum SizeConstants {
-        static let imageWidth: CGFloat = 60
-        static let imageCornerRadius: CGFloat = 8
-    }
-    
-    func thumbnailView(name: String) -> some View {
-        CachedAsyncImage(url: URL(string: name)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFit()
-            case .failure(_):
-                Color.red
-            default:
-                ProgressView()
-            }
-        }
-        .frame(width: SizeConstants.imageWidth)
-        .cornerRadius(SizeConstants.imageCornerRadius)
-    }
-    
     func titleView(title: String) -> some View {
         Text(title)
     }
@@ -72,12 +54,15 @@ extension ProductsListView {
     
     @ViewBuilder
     var overlayView: some View {
-        if viewModel.isLoading {
-            ProgressView()
-        } else if let error = viewModel.errorMessage {
-            Text(error)
-                .foregroundColor(.red)
-                .padding()
-        }
+        switch viewModel.viewState {
+            case .loading:
+                ProgressView()
+            case .error(let message):
+                Text(message)
+                    .foregroundColor(.red)
+                    .padding()
+            default:
+                EmptyView()
+            }
     }
 }

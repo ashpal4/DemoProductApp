@@ -8,7 +8,7 @@
 import Combine
 @testable import DemoProductApp
 
-final class MockProductRepository: ProductRepository {
+final class MockProductRepository: ProductRepositoryProtocol {
     var productsToReturn: [Product] = []
     var errorToThrow: Error?
 

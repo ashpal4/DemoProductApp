@@ -1,5 +1,5 @@
 //
-//  FetchProductsUseCase.swift
+//  FetchProductsUseCaseProtocol.swift
 //  DemoProductApp
 //
 //  Created by Ashish Pal on 16/06/25.
@@ -11,7 +11,7 @@ import Combine
 ///
 /// This represents the business logic layer and acts as an abstraction
 /// between the view model and data layer.
-protocol FetchProductsUseCase {
+protocol FetchProductsUseCaseProtocol {
     /// Executes the use case to fetch products.
     ///
     /// - Returns: A publisher that emits a list of `Product` or an `Error`.

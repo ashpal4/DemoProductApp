@@ -7,8 +7,20 @@
 
 import SwiftUI
 
+/// A basic in-memory image cache using a static dictionary.
+///
+/// `ImageCache` stores SwiftUI `Image` instances keyed by their corresponding `URL`s.
+/// It is used to avoid re-downloading images during list scrolling or navigation.
 final class ImageCache {
+
+    /// The underlying image storage.
     static private var cache: [URL: Image] = [:]
+
+    /// Accesses the image for a given URL.
+    ///
+    /// - Parameter url: The URL used as the cache key.
+    ///
+    /// - Returns: The cached `Image`, or `nil` if not present.
     static subscript(url: URL) -> Image? {
         get {
             ImageCache.cache[url]
@@ -16,36 +28,5 @@ final class ImageCache {
         set {
             ImageCache.cache[url] = newValue
         }
-    }
-}
-
-struct CachedAsyncImage<Content>: View where Content: View {
-    private let url: URL?
-    private let scale: CGFloat
-    private let transaction: Transaction
-    private let content: (AsyncImagePhase) -> Content
-    
-    init(url: URL?, scale: CGFloat = 1.0, transaction: Transaction = Transaction(), @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
-        self.url = url
-        self.scale = scale
-        self.transaction = transaction
-        self.content = content
-    }
-    var body: some View {
-        if let url = self.url, let cached = ImageCache[url] {
-            content(.success(cached))
-        } else {
-            AsyncImage(url: url, scale: scale, transaction: transaction) { phase in
-                cacheAndRender(phase: phase)
-            }
-        }
-    }
-    
-    func cacheAndRender(phase: AsyncImagePhase) -> some View {
-        if case .success(let image) = phase, let url = self.url {
-            ImageCache[url] = image
-        }
-        
-        return content(phase)
     }
 }

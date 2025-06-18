@@ -18,14 +18,14 @@ final class DIContainer {
     // MARK: - Repositories
 
     /// Lazily initialized product repository.
-    lazy var productRepository: ProductRepository = {
+    lazy var productRepository: ProductRepositoryProtocol = {
         ProductRepositoryImpl(apiClient: apiClient)
     }()
 
     // MARK: - Use Cases
 
     /// Lazily initialized use case for fetching products.
-    lazy var fetchProductsUseCase: FetchProductsUseCase = {
+    lazy var fetchProductsUseCase: FetchProductsUseCaseProtocol = {
         FetchProductsUseCaseImpl(repository: productRepository)
     }()
 
