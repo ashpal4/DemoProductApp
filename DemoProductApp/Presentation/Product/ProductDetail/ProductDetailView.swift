@@ -8,12 +8,21 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-    @ObservedObject var viewModel: ProductDetailViewModel
+    @StateObject var viewModel: ProductDetailViewModel
+    
+    init(viewModel: ProductDetailViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         ScrollView {
-            VStack(spacing: SizeConstants.spacing) {
-                thumbnailView(name: viewModel.thumbnail)
+            VStack(spacing: SizeConstants.productDetailSpacing) {
+                ThumbnailImageView(
+                    imageUrl: viewModel.thumbnail,
+                    imageWidth: SizeConstants.productDetailImageHeight,
+                    imageHeight: SizeConstants.productDetailImageHeight,
+                    imageCornerRadius: SizeConstants.productDetailImageCornerRadius
+                )
                 titleView(title: viewModel.title)
                 descriptionView(description: viewModel.description)
             }
@@ -24,29 +33,6 @@ struct ProductDetailView: View {
 }
 
 extension ProductDetailView {
-    enum SizeConstants {
-        static let spacing: CGFloat = 16
-        static let imageHeight: CGFloat = 200
-        static let imageCornerRadius: CGFloat = 12
-    }
-    
-    func thumbnailView(name: String) -> some View {
-        AsyncImage(url: URL(string: name)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFit()
-            case .failure(_):
-                Color.red
-            default:
-                ProgressView()
-            }
-        }
-        .frame(height: SizeConstants.imageHeight)
-        .cornerRadius(SizeConstants.imageCornerRadius)
-    }
-    
     func titleView(title: String) -> some View {
         Text(title)
             .font(.title)

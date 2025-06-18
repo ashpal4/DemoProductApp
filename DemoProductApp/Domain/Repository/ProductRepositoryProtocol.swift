@@ -1,5 +1,5 @@
 //
-//  ProductRepository.swift
+//  ProductRepositoryProtocol.swift
 //  DemoProductApp
 //
 //  Created by Ashish Pal on 16/06/25.
@@ -10,7 +10,7 @@ import Combine
 /// A repository protocol that defines the contract for fetching products.
 ///
 /// Typically implemented to abstract network or database access for product data.
-protocol ProductRepository {
+protocol ProductRepositoryProtocol {
     
     /// Fetches a list of products asynchronously.
     ///

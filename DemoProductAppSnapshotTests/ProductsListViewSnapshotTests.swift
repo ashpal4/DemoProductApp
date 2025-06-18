@@ -42,7 +42,7 @@ final class ProductsListViewSnapshotTests: XCTestCase {
 
 import Combine
 
-final class MockProductRepository: ProductRepository {
+final class MockProductRepository: ProductRepositoryProtocol {
     var productsToReturn: [Product] = []
     var errorToThrow: Error?
 

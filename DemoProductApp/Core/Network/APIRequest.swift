@@ -7,13 +7,19 @@
 
 import Foundation
 
+/// A lightweight wrapper around `URLRequest` for representing API calls.
 struct APIRequest {
+
+    /// The URL of the request.
     let url: URL
-    let method: String
-    
+
+    /// The HTTP method to use, e.g., `.get` or `.post`.
+    let method: HTTPMethod
+
+    /// The constructed `URLRequest` from the provided URL and method.
     var urlRequest: URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         return request
     }
 }

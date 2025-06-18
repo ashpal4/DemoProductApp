@@ -8,16 +8,16 @@
 import Foundation
 import Combine
 
-/// Concrete implementation of `ProductRepository` that fetches data using an API client.
-final class ProductRepositoryImpl: ProductRepository {
+/// Concrete implementation of `ProductRepositoryProtocol` that fetches data using an API client.
+final class ProductRepositoryImpl: ProductRepositoryProtocol {
 
     /// The API client used to perform network requests.
     private let apiClient: APIClientProtocol
 
     /// Initializes the repository with a given API client.
     ///
-    /// - Parameter apiClient: The API client to be used. Defaults to an instance of `APIClient`.
-    init(apiClient: APIClientProtocol = APIClient()) {
+    /// - Parameter apiClient: The API client to be used.
+    init(apiClient: APIClientProtocol) {
         self.apiClient = apiClient
     }
 
@@ -29,9 +29,12 @@ final class ProductRepositoryImpl: ProductRepository {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
 
-        let apiRequest = APIRequest(url: url, method: "GET")
+        let apiRequest = APIRequest(url: url, method: .get)
 
-        return apiClient.request(apiRequest.urlRequest, responseType: ProductResponseDTO.self)
+        return apiClient.request(
+            apiRequest.urlRequest,
+            responseType: ProductResponseDTO.self
+        )
             .map { $0.toDomainModel() }
             .eraseToAnyPublisher()
     }

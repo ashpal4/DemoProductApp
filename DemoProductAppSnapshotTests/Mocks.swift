@@ -9,7 +9,7 @@ import Foundation
 import Combine
 @testable import DemoProductApp
 
-final class MockFetchProductsUseCase: FetchProductsUseCase {
+final class MockFetchProductsUseCase: FetchProductsUseCaseProtocol {
     private let products: [Product]
     
     init(products: [Product]) {
@@ -23,7 +23,7 @@ final class MockFetchProductsUseCase: FetchProductsUseCase {
     }
 }
 
-final class MockFailingFetchProductsUseCase: FetchProductsUseCase {
+final class MockFailingFetchProductsUseCase: FetchProductsUseCaseProtocol {
     func execute() -> AnyPublisher<[Product], Error> {
         Fail(error: URLError(.badServerResponse))
             .eraseToAnyPublisher()

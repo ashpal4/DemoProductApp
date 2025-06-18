@@ -20,7 +20,7 @@ final class ProductsListViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     /// Use case that handles the logic for fetching products.
-    private let fetchProductsUseCase: FetchProductsUseCase
+    private let fetchProductsUseCase: FetchProductsUseCaseProtocol
     
     /// A set used to store Combine cancellables for managing subscriptions.
     private var cancellables = Set<AnyCancellable>()
@@ -28,7 +28,7 @@ final class ProductsListViewModel: ObservableObject {
     /// Initializes a new instance of `ProductsListViewModel`.
     ///
     /// - Parameter fetchProductsUseCase: The use case responsible for fetching the list of products.
-    init(fetchProductsUseCase: FetchProductsUseCase) {
+    init(fetchProductsUseCase: FetchProductsUseCaseProtocol) {
         self.fetchProductsUseCase = fetchProductsUseCase
     }
 
