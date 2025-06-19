@@ -7,11 +7,15 @@
 
 import SwiftUI
 
+/// The main entry point for the application, defining the root scene and initial view.
 @main
 struct MainApp: App {
+    
+    // MARK: - Body
+    
     var body: some Scene {
         WindowGroup {
-            AppCoordinatorView()
+            AppCoordinatorView() // Initial view to launch when the app starts.
         }
     }
 }
