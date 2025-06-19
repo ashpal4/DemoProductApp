@@ -9,9 +9,18 @@ import Foundation
 import Combine
 @testable import DemoProductApp
 
+/// A mock implementation of `APIClientProtocol` used for unit testing API calls without real network access.
 final class MockAPIClient: APIClientProtocol {
+    
+    /// The result to return from the request (either success with data or failure with an error).
     var result: Result<Decodable, Error>?
 
+    /// Simulates making an API request and returns a publisher with the provided result.
+    ///
+    /// - Parameters:
+    ///   - request: The original URL request (not used in logic).
+    ///   - responseType: The expected response type.
+    /// - Returns: A publisher emitting either the expected response or an error.
     func request<T: Decodable>(_ request: URLRequest, responseType: T.Type) -> AnyPublisher<T, Error> {
         guard let result = result else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()

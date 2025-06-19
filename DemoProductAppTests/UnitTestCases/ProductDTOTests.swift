@@ -8,22 +8,14 @@
 import XCTest
 @testable import DemoProductApp
 
+/// Unit tests for `ProductDTO` and `ProductResponseDTO` model conversions and decoding.
 final class ProductDTOTests: XCTestCase {
-
+    
+    /// Tests conversion of a single `ProductDTO` to domain model.
     func test_ProductDTO_toDomainModel() {
-        // Arrange
-        let dto = ProductDTO(
-            id: 1,
-            title: "Sample",
-            price: 99.99,
-            thumbnail: "https://example.com/image.jpg",
-            description: "Sample description"
-        )
-
-        // Act
+        let dto = ProductDTO(id: 1, title: "Sample", price: 99.99, thumbnail: "https://example.com/image.jpg", description: "Sample description")
         let domain = dto.toDomainModel()
 
-        // Assert
         XCTAssertEqual(domain.id, dto.id)
         XCTAssertEqual(domain.title, dto.title)
         XCTAssertEqual(domain.price, dto.price)
@@ -31,8 +23,8 @@ final class ProductDTOTests: XCTestCase {
         XCTAssertEqual(domain.description, dto.description)
     }
 
+    /// Tests conversion of a `ProductResponseDTO` containing multiple products to domain models.
     func test_ProductResponseDTO_toDomainModel() throws {
-        // Arrange
         let json = """
         {
             "products": [
@@ -54,16 +46,15 @@ final class ProductDTOTests: XCTestCase {
         }
         """.data(using: .utf8)!
 
-        // Act
         let dto = try JSONDecoder().decode(ProductResponseDTO.self, from: json)
         let domainModels = dto.toDomainModel()
 
-        // Assert
         XCTAssertEqual(domainModels.count, 2)
         XCTAssertEqual(domainModels[0].title, "Test Product")
         XCTAssertEqual(domainModels[1].price, 29.99)
     }
 
+    /// Tests decoding a single `ProductDTO` from JSON.
     func test_ProductDTO_decodingFromJSON() throws {
         let json = """
         {

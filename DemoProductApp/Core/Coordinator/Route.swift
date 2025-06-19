@@ -7,16 +7,11 @@
 
 import Foundation
 
+/// Represents the possible screens in the app's navigation.
 enum Screen: Hashable {
-    var id: String {
-        switch self {
-        case .productsList:
-            return "productsList"
-        case .productDetail(let product):
-            return "productDetail_\(product.id)"
-        }
-    }
-    
+    /// The screen displaying the list of products.
     case productsList
+
+    /// The screen displaying the details of a selected product.
     case productDetail(product: Product)
 }

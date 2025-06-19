@@ -8,8 +8,10 @@
 import XCTest
 @testable import DemoProductApp
 
+/// Unit tests for `ProductDetailViewModel`.
 final class ProductDetailViewModelTests: XCTestCase {
-
+    
+    /// Verifies that the view model initializes with the correct product.
     func test_init_setsProductCorrectly() {
         let product = Product.mock()
         let viewModel = ProductDetailViewModel(product: product)

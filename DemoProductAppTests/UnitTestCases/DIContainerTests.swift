@@ -9,7 +9,10 @@ import XCTest
 import Combine
 @testable import DemoProductApp
 
+/// Tests for verifying dependency injection through `DIContainer`.
 final class DIContainerTests: XCTestCase {
+    
+    /// Tests that the DI container provides non-nil use case and repository instances.
     func testDIContainer_ProvidesUseCase() {
         let container = DIContainer()
         let useCase = container.fetchProductsUseCase
