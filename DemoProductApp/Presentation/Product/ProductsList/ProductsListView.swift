@@ -12,9 +12,6 @@ struct ProductsListView: View {
     
     // MARK: - Properties
     
-    /// The coordinator responsible for navigating between views.
-    @EnvironmentObject private var coordinator: AppCoordinator
-    
     /// The view model responsible for managing the state and logic of the products list.
     @StateObject private var viewModel: ProductsListViewModel
     
@@ -32,21 +29,7 @@ struct ProductsListView: View {
     var body: some View {
         // A list displaying all the products from the view model.
         List(viewModel.products) { product in
-            Button {
-                // Navigates to the product detail screen when a product is tapped.
-                coordinator.push(.productDetail(product: product))
-            } label: {
-                HStack {
-                    // Displays the product thumbnail image.
-                    ThumbnailImageView(imageUrl: product.thumbnail)
-                    
-                    // Displays the product's title and price.
-                    VStack(alignment: .leading) {
-                        titleView(title: product.title)
-                        priceView(price: product.price)
-                    }
-                }
-            }
+            ProductRow(product: product)
         }
         // Loads products when the view appears if the list is empty.
         .onAppear {
@@ -64,24 +47,6 @@ struct ProductsListView: View {
 }
 
 extension ProductsListView {
-    
-    /// A view displaying the product's title.
-    ///
-    /// - Parameter title: The title of the product.
-    /// - Returns: A `Text` view displaying the product title.
-    func titleView(title: String) -> some View {
-        Text(title)
-    }
-    
-    /// A view displaying the product's price.
-    ///
-    /// - Parameter price: The price of the product.
-    /// - Returns: A `Text` view displaying the formatted price.
-    func priceView(price: Double) -> some View {
-        Text(price.currencyFormatted()) // Formats the price as currency.
-            .font(.subheadline)
-            .foregroundColor(.gray)
-    }
     
     // MARK: - Overlay View
     
@@ -102,4 +67,3 @@ extension ProductsListView {
         }
     }
 }
-
