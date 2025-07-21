@@ -2,9 +2,8 @@
 
 This App is an **iOS** application built using **SwiftUI** and follows the **Clean Architecture** principles. It allows users to explore various products, view detailed product information, and enjoy a smooth, intuitive UI experience.
 
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-21 at 12 32 25" src="https://github.com/user-attachments/assets/c26f87e7-ff7e-486a-87bc-248814035bd4" />
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-21 at 12 32 38" src="https://github.com/user-attachments/assets/b63777a8-d627-49f8-80a0-dc3fb7e179dd" />
-
+<img width="250" height="544" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-21 at 12 32 25" src="https://github.com/user-attachments/assets/749253d0-e3ae-40ba-afc1-e20e26b374b5" />
+<img width="250" height="544" alt="Simulator Screenshot - iPhone 16 Pro - 2025-07-21 at 12 32 38" src="https://github.com/user-attachments/assets/90b87221-be5d-4593-b260-fe8ebace8d72" />
 
 
 📌 **Features**
