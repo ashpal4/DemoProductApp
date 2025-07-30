@@ -13,13 +13,12 @@ import Foundation
 /// `APIClientProtocol` abstracts the underlying networking logic and provides
 /// a generic `request` method that publishes a decoded response.
 protocol APIClientProtocol {
-
-    /// Sends a network request and decodes the response into a specified type.
+    /// Sends a network request to a specified endpoint and decodes the response into a specified type.
     ///
     /// - Parameters:
-    ///   - request: The `URLRequest` to be sent.
+    ///   - endpoint: The endpoint path to be appended to the base URL.
     ///   - responseType: The expected `Decodable` type of the response.
     ///
     /// - Returns: A publisher emitting the decoded object or an error.
-    func request<T: Decodable>(_ request: URLRequest, responseType: T.Type) -> AnyPublisher<T, Error>
+    func request<T: Decodable>(_ endpoint: String, responseType: T.Type) -> AnyPublisher<T, Error>
 }

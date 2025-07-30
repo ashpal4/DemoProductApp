@@ -22,6 +22,7 @@
 		48A776E22E02B2D7001EAF0A /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A776E12E02B2D7001EAF0A /* ImageCacheTests.swift */; };
 		48A7B4142E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B4132E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift */; };
 		48A7B4162E0419BE001F5496 /* MockProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B4152E0419BE001F5496 /* MockProductRepository.swift */; };
+		48B335132E3A2BB6004141C8 /* APIClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B335122E3A2BB6004141C8 /* APIClientError.swift */; };
 		BD0201A12E00559C00A71020 /* ProductRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A02E00559C00A71020 /* ProductRepositoryProtocol.swift */; };
 		BD0201A42E005AF100A71020 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A32E005AF100A71020 /* DIContainer.swift */; };
 		BD0201A62E005C1400A71020 /* MockProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A52E005C1400A71020 /* MockProductRepository.swift */; };
@@ -90,6 +91,7 @@
 		48A776E12E02B2D7001EAF0A /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		48A7B4132E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailingFetchProductsUseCase.swift; sourceTree = "<group>"; };
 		48A7B4152E0419BE001F5496 /* MockProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductRepository.swift; sourceTree = "<group>"; };
+		48B335122E3A2BB6004141C8 /* APIClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientError.swift; sourceTree = "<group>"; };
 		BD0201A02E00559C00A71020 /* ProductRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BD0201A32E005AF100A71020 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BD0201A52E005C1400A71020 /* MockProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductRepository.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				BDDF165F2E001F3E00530378 /* APIClient.swift */,
 				4866981F2E01AEA000AAEC0B /* APIRequest.swift */,
 				4812AB8F2E02EEE8004D00C5 /* HTTPMethod.swift */,
+				48B335122E3A2BB6004141C8 /* APIClientError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				BDDF16492E00198300530378 /* Double+Extensions.swift in Sources */,
 				BDDF16332E00065C00530378 /* AppCoordinator.swift in Sources */,
 				BDDF16352E00068300530378 /* Product.swift in Sources */,
+				48B335132E3A2BB6004141C8 /* APIClientError.swift in Sources */,
 				BDDF16392E0006A600530378 /* ProductRepositoryImpl.swift in Sources */,
 				BD0201A12E00559C00A71020 /* ProductRepositoryProtocol.swift in Sources */,
 				4812AB902E02EEE8004D00C5 /* HTTPMethod.swift in Sources */,

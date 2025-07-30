@@ -33,6 +33,6 @@ final class DIContainer {
 
     /// Lazily initialized API client used for network communication.
     private lazy var apiClient: APIClientProtocol = {
-        APIClient()
+        APIClient(baseURL: URL(string: APIConstants.baseURL)!)
     }()
 }
