@@ -10,34 +10,61 @@ import Combine
 
 /// A concrete implementation of `APIClientProtocol` that uses `URLSession` to perform network requests.
 final class APIClient: APIClientProtocol {
-
     /// The URL session used for performing network requests.
     private let session: URLSession
-
-    /// Initializes the API client with a given URL session.
+    
+    /// The base URL for the API.
+    private let baseURL: URL
+    /// Initializes the API client with a given URL session and base URL.
     ///
-    /// - Parameter session: The `URLSession` instance to use. Defaults to `.shared`.
-    init(session: URLSession = .shared) {
+    /// - Parameters:
+    ///   - baseURL: The base URL for the API.
+    ///   - session: The `URLSession` instance to use. Defaults to `.shared`.
+    init(baseURL: URL, session: URLSession = .shared) {
+        self.baseURL = baseURL
         self.session = session
     }
-
+    
     /// Sends a request and decodes the response into the specified type.
     ///
     /// - Parameters:
-    ///   - request: The `URLRequest` to be executed.
+    ///   - endpoint: The endpoint path to be appended to the base URL.
     ///   - responseType: The type into which the response will be decoded.
     ///
     /// - Returns: A publisher that emits the decoded object or an error.
-    func request<T: Decodable>(_ request: URLRequest, responseType: T.Type) -> AnyPublisher<T, Error> {
+    func request<T: Decodable>(_ endpoint: String, responseType: T.Type) -> AnyPublisher<T, Error> {
+        guard let url = URL(string: endpoint, relativeTo: baseURL) else {
+            return Fail(error: APIClientError.invalidURL).eraseToAnyPublisher()
+        }
+        
+        let request = URLRequest(url: url)
+        
         return session.dataTaskPublisher(for: request)
             .tryMap { result in
-                let decoder = JSONDecoder()
-                guard let httpResponse = result.response as? HTTPURLResponse,
-                      (200...299).contains(httpResponse.statusCode) else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = result.response as? HTTPURLResponse else {
+                    throw APIClientError.unknownError
                 }
-                return try decoder.decode(T.self, from: result.data)
+                
+                switch httpResponse.statusCode {
+                case 200...299:
+                    let decoder = JSONDecoder()
+                    do {
+                        return try decoder.decode(T.self, from: result.data)
+                    } catch {
+                        throw APIClientError.decodingError(error)
+                    }
+                default:
+                    throw APIClientError.httpError(statusCode: httpResponse.statusCode)
+                }
+            }
+            .mapError { error in
+                if let apiClientError = error as? APIClientError {
+                    return apiClientError
+                } else {
+                    return APIClientError.unknownError
+                }
             }
             .eraseToAnyPublisher()
     }
 }
+

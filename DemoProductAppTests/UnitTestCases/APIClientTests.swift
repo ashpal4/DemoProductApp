@@ -20,7 +20,7 @@ final class APIClientTests: XCTestCase {
         cancellables = []
         super.tearDown()
     }
-
+    
     /// Tests that the `APIClient` correctly decodes a successful HTTP response.
     ///
     /// This test sets up a mock `ProductResponseDTO`, encodes it into JSON, and verifies that
@@ -30,26 +30,21 @@ final class APIClientTests: XCTestCase {
         let expectedProduct = ProductDTO(id: 1, title: "Mock", price: 10.0, thumbnail: "img", description: "desc")
         let responseDTO = ProductResponseDTO(products: [expectedProduct])
         let responseData = try JSONEncoder().encode(responseDTO)
-
-        let url = URL(string: "https://mockapi.com/products")!
-        let request = URLRequest(url: url)
-
+        let baseURL = URL(string: "https://mockapi.com")!
+        let endpoint = "/products"
         // Configure a custom session using MockURLProtocol
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         let session = URLSession(configuration: config)
-
         // Mock the HTTP 200 response with JSON data
         MockURLProtocol.requestHandler = { _ in
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: baseURL.appendingPathComponent(endpoint), statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, responseData)
         }
-
-        let client = APIClient(session: session)
+        let client = APIClient(baseURL: baseURL, session: session)
         let expectation = XCTestExpectation(description: "Receive product response")
-
         // Act & Assert
-        client.request(request, responseType: ProductResponseDTO.self)
+        client.request(endpoint, responseType: ProductResponseDTO.self)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
                     XCTFail("Expected success, got error: \(error)")
@@ -59,37 +54,37 @@ final class APIClientTests: XCTestCase {
                 expectation.fulfill()
             })
             .store(in: &cancellables)
-
         wait(for: [expectation], timeout: 1.0)
     }
-
+    
     /// Tests that the `APIClient` correctly returns a failure when the HTTP response is invalid (e.g., 500).
     ///
     /// This simulates a server error and ensures that the client returns a failure instead of trying to decode an invalid response.
     func testRequest_FailureResponse() {
         // Arrange
-        let url = URL(string: "https://mockapi.com/products")!
-        let request = URLRequest(url: url)
-
+        let baseURL = URL(string: "https://mockapi.com")!
+        let endpoint = "/products"
         // Configure session with mock protocol
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         let session = URLSession(configuration: config)
-
         // Mock a 500 Internal Server Error response
         MockURLProtocol.requestHandler = { _ in
-            let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)!
+            let response = HTTPURLResponse(url: baseURL.appendingPathComponent(endpoint), statusCode: 500, httpVersion: nil, headerFields: nil)!
             return (response, Data())
         }
-
-        let client = APIClient(session: session)
+        let client = APIClient(baseURL: baseURL, session: session)
         let expectation = XCTestExpectation(description: "Fails with error")
-
         // Act & Assert
-        client.request(request, responseType: ProductResponseDTO.self)
+        client.request(endpoint, responseType: ProductResponseDTO.self)
             .sink(receiveCompletion: { completion in
-                if case .failure = completion {
-                    expectation.fulfill()
+                if case .failure(let error) = completion {
+                    if case APIClientError.httpError(let statusCode) = error {
+                        XCTAssertEqual(statusCode, 500)
+                        expectation.fulfill()
+                    } else {
+                        XCTFail("Expected HTTP error with status code 500")
+                    }
                 } else {
                     XCTFail("Expected failure")
                 }
@@ -97,7 +92,6 @@ final class APIClientTests: XCTestCase {
                 XCTFail("Expected failure")
             })
             .store(in: &cancellables)
-
         wait(for: [expectation], timeout: 1.0)
     }
 }

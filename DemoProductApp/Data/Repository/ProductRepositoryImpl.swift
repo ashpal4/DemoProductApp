@@ -25,16 +25,8 @@ final class ProductRepositoryImpl: ProductRepositoryProtocol {
     ///
     /// - Returns: A publisher that emits an array of `Product` or an error.
     func fetchProducts() -> AnyPublisher<[Product], Error> {
-        guard let url = URL(string: APIConstants.baseURL + APIConstants.productsEndpoint) else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
-
-        let apiRequest = APIRequest(url: url, method: .get)
-
-        return apiClient.request(
-            apiRequest.urlRequest,
-            responseType: ProductResponseDTO.self
-        )
+        return apiClient
+            .request(APIConstants.productsEndpoint, responseType: ProductResponseDTO.self)
             .map { $0.toDomainModel() }
             .eraseToAnyPublisher()
     }
