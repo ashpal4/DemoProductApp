@@ -26,44 +26,34 @@ struct ProductsListView: View {
     
     // MARK: - Body
     
+    /// The body of the view, defining the UI layout and behavior.
     var body: some View {
-        // A list displaying all the products from the view model.
-        List(viewModel.products) { product in
-            ProductRow(product: product)
+        VStack {
+            // Switches between different UI states based on the current view state.
+            switch viewModel.viewState {
+            case .completed(let products):
+                // Displays a list of products when loading is completed.
+                List(products) { product in
+                    ProductRow(product: product) // Represents each product as a row in the list.
+                }
+            case .empty:
+                // Displays a message when there are no products available.
+                Text("No products available")
+            case .loading:
+                // Shows a loading spinner while fetching products.
+                ProgressView()
+            case .error(let message):
+                // Shows an error message in case of a failure.
+                Text(message)
+                    .foregroundColor(.red) // Sets the text color to red for error indication.
+                    .padding() // Adds padding around the error message.
+            }
         }
         // Loads products when the view appears if the list is empty.
         .onAppear {
-            if viewModel.products.isEmpty {
-                viewModel.loadProducts()
-            }
+            viewModel.loadProducts()
         }
-        // Displays an overlay based on the view state.
-        .overlay {
-            overlayView
-        }
-        // Sets the navigation title.
+        // Sets the navigation title for the view.
         .navigationTitle(StringConstants.productsListTitle)
-    }
-}
-
-extension ProductsListView {
-    
-    // MARK: - Overlay View
-    
-    /// A view that shows different states based on the view model's `viewState`.
-    ///
-    /// The overlay displays a loading indicator, an error message, or nothing depending on the current state.
-    @ViewBuilder
-    var overlayView: some View {
-        switch viewModel.viewState {
-            case .loading:
-                ProgressView() // Shows a loading spinner while fetching products.
-            case .error(let message):
-                Text(message) // Shows an error message in case of a failure.
-                    .foregroundColor(.red)
-                    .padding()
-            default:
-                EmptyView() // Displays nothing if the state is idle or other.
-        }
     }
 }
