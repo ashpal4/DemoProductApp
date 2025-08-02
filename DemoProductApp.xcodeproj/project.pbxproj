@@ -23,6 +23,7 @@
 		48A7B4142E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B4132E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift */; };
 		48A7B4162E0419BE001F5496 /* MockProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B4152E0419BE001F5496 /* MockProductRepository.swift */; };
 		48B335132E3A2BB6004141C8 /* APIClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B335122E3A2BB6004141C8 /* APIClientError.swift */; };
+		48E2014D2E3DEACC003C3BDB /* MockLoadingFetchProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E2014C2E3DEACC003C3BDB /* MockLoadingFetchProductsUseCase.swift */; };
 		BD0201A12E00559C00A71020 /* ProductRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A02E00559C00A71020 /* ProductRepositoryProtocol.swift */; };
 		BD0201A42E005AF100A71020 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A32E005AF100A71020 /* DIContainer.swift */; };
 		BD0201A62E005C1400A71020 /* MockProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0201A52E005C1400A71020 /* MockProductRepository.swift */; };
@@ -92,6 +93,7 @@
 		48A7B4132E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFailingFetchProductsUseCase.swift; sourceTree = "<group>"; };
 		48A7B4152E0419BE001F5496 /* MockProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductRepository.swift; sourceTree = "<group>"; };
 		48B335122E3A2BB6004141C8 /* APIClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientError.swift; sourceTree = "<group>"; };
+		48E2014C2E3DEACC003C3BDB /* MockLoadingFetchProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoadingFetchProductsUseCase.swift; sourceTree = "<group>"; };
 		BD0201A02E00559C00A71020 /* ProductRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BD0201A32E005AF100A71020 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BD0201A52E005C1400A71020 /* MockProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductRepository.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				BD0201C42E00712900A71020 /* MockFetchProductsUseCase.swift */,
+				48E2014C2E3DEACC003C3BDB /* MockLoadingFetchProductsUseCase.swift */,
 				48A7B4132E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift */,
 				48A7B4152E0419BE001F5496 /* MockProductRepository.swift */,
 			);
@@ -595,6 +598,7 @@
 				BD0201C52E00712900A71020 /* MockFetchProductsUseCase.swift in Sources */,
 				48A7B4142E0419AB001F5496 /* MockFailingFetchProductsUseCase.swift in Sources */,
 				48A7B4162E0419BE001F5496 /* MockProductRepository.swift in Sources */,
+				48E2014D2E3DEACC003C3BDB /* MockLoadingFetchProductsUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
